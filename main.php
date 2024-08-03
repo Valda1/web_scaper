@@ -15,3 +15,11 @@ curl_close($curl);
 
 $dom = new DOMDocument;
 @$dom->loadHTML($output);
+
+$links = $dom->getElementsByTagName('a');
+
+foreach ($links as $link) {
+    echo $link->getAttribute('href') . " - " . $link->nodeValue . "\n";
+}
+
+?>
