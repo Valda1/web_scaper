@@ -1,5 +1,10 @@
 <?php
 
+function downloadFile($url, $savePath){
+    $fileContent = file_get_contents($url);
+    file_put_contents($savePath, $fileContent);
+}
+
 #Initializing new cURL session; returns cURL handle
 $curl = curl_init();
 
@@ -18,13 +23,22 @@ if($output === false){
     exit;
 }
 
-$dom = new DOMDocument;
-@$dom->loadHTML($output);
-
 //Save the HTML content to a local file
 $file = 'copied_content.html';
 file_put_contents($file, $output);
 
-echo "HTML content copied and saved to: " . $file . "\n";
+$dom = new DOMDocument;
+@$dom->loadHTML($output);
+
+//Download CSS files
+$links = $dom->getElementsByTagName('link');
+foreach ($links as $link) {
+    $rel = $link->getAttribute('rel');
+    if ($rel === 'stylesheet') {
+        $cssUrl = $link->getAttribute('href');
+        downloadFile($cssUrl, basename($cssUrl));
+        echo "Downloaded CSS: " . basename($cssUrl) . "\n";
+    }
+}
 
 ?>
