@@ -21,10 +21,10 @@ if($output === false){
 $dom = new DOMDocument;
 @$dom->loadHTML($output);
 
-$links = $dom->getElementsByTagName('a');
+//Save the HTML content to a local file
+$file = 'copied_content.html';
+file_put_contents($file, $output);
 
-foreach ($links as $link) {
-    echo $link->getAttribute('href') . " - " . $link->nodeValue . "\n";
-}
+echo "HTML content copied and saved to: " . $file . "\n";
 
 ?>
