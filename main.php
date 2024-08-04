@@ -41,4 +41,14 @@ foreach ($links as $link) {
     }
 }
 
+//Download JavaScript files
+$scripts = $dom->getElementsByTagName('script');
+foreach ($scripts as $script) {
+    $jsUrl = $script->getAttribute('src');
+    if ($jsUrl) { // Only download if src attribute exists
+        downloadFile($jsUrl, basename($jsUrl));
+        echo "Downloaded JavaScript: " . basename($jsUrl) . "\n";
+    }
+}
+
 ?>
