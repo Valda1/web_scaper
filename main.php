@@ -3,7 +3,7 @@
 #Initializing new cURL session; returns cURL handle
 $curl = curl_init();
 
-curl_setopt($curl, CURLOPT_URL, "http://example.com");
+curl_setopt($curl, CURLOPT_URL, "http://juniortaskvaldabimbirule.id.lv/");
 
 #Returns result as a string instead of directly outputting it
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -12,6 +12,11 @@ curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 $output = curl_exec($curl);
 
 curl_close($curl);
+
+if($output === false){
+    echo "Error fetching URL: " . curl_error($curl);
+    exit;
+}
 
 $dom = new DOMDocument;
 @$dom->loadHTML($output);
